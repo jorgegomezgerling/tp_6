@@ -10,6 +10,9 @@ class GestorTokens:
             cls._instancia = super(GestorTokens, cls).__new__(cls)
             cls._cargar_tokens(cls._instancia)
         return cls._instancia
+    
+    def __init__(self):
+        self.version = "1.2"
 
     @staticmethod
     def _cargar_tokens(self):
@@ -115,9 +118,12 @@ class ProcesadorPagos:
             cuenta.saldo = 0
 
 def main():
-    if len(sys.argv) < 2:
-        print("Uso: python getJasonR.py <sitedata.json> <monto> O python getJasonR.py listar O python getJasonR.py limpiar")
-        return
+    if len(sys.argv) == 2 and sys.argv[1] == "-v":
+        print("Versión:", GestorTokens().version)
+        sys.exit(0)
+    elif len(sys.argv) != 3:
+        print("Uso: python3.12 getJasonR.py {ruta al archivo JSON}/{nombre del archivo JSON}.json {clave}")
+        sys.exit(1)
 
     if sys.argv[1] == "listar":
         procesador = ProcesadorPagos()
